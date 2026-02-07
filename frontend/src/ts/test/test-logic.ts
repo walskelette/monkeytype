@@ -1030,9 +1030,11 @@ export async function finish(difficultyFailed = false): Promise<void> {
       mode2Number === 0 &&
       completedEvent.testDuration < 15) ||
     (Config.mode === "custom" &&
-      (CustomText.getLimitMode() === "word" ||
-        CustomText.getLimitMode() === "section") &&
+      CustomText.getLimitMode() === "word" &&
       CustomText.getLimitValue() < 10) ||
+    (Config.mode === "custom" &&
+      CustomText.getLimitMode() === "section" &&
+      TestWords.words.length < 10) ||
     (Config.mode === "custom" &&
       CustomText.getLimitMode() === "time" &&
       CustomText.getLimitValue() < 15) ||
