@@ -121,14 +121,7 @@ export function instantHide(): void {
 }
 
 function getCurrentCount(): number {
-  if (Config.mode === "custom" && CustomText.getLimitMode() === "section") {
-    return (
-      (TestWords.words.sectionIndexList[TestState.activeWordIndex] as number) -
-      1
-    );
-  } else {
-    return TestInput.input.getHistory().length;
-  }
+  return TestInput.input.getHistory().length;
 }
 
 export function update(): void {
@@ -201,7 +194,11 @@ export function update(): void {
         outof = Config.words;
       }
       if (Config.mode === "custom") {
-        outof = CustomText.getLimitValue();
+        if (CustomText.getLimitMode() === "section") {
+          outof = TestWords.words.length;
+        } else {
+          outof = CustomText.getLimitValue();
+        }
       }
       if (Config.mode === "quote") {
         outof = TestWords.currentQuote?.textSplit.length ?? 1;
